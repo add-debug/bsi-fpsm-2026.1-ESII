@@ -7,24 +7,20 @@ Substitua cada `...` pela sua resposta.
 ---
 
 ## 1. Quais são as 3 responsabilidades grudadas na classe `Academia`?
-Escreva no formato "a classe faz **X** e **Y** e **Z**":
-
+A classe Academia faz regras de negócio e gerenciamento da interface de tela  e o envio de notificações externas.
 > ...
 
 ## 2. Aponte, no código, **uma linha** de cada responsabilidade
-(diga o número da linha e cole o trecho)
-
-- **Regra de negócio** (cálculo / contagem): linha ____ — `...`
-- **Tela** (interface com o usuário): linha ____ — `...`
-- **Notificação** (aviso ao aluno): linha ____ — `...`
+•	Regra de Negócio: Linhas 18 a 24.
+•	Interface: Linhas 14 a 16.
+•	Notificação: Linha 33.
 
 ## 3. Como o SRP separa essas responsabilidades?
-Diga **em qual componente** cada responsabilidade passa a morar:
-
+A Regra de Negócio passa a morar na classe AcademiaService.
+Interface passa a morar na função main().
+Notificação passa a morar na classe Notificador.
 > ...
 
 ## 4. Por que ficou melhor? Cite **um** RNF
-(manutenibilidade, testabilidade **ou** extensibilidade — veja `docs/requisitos.md`)
-e explique em 1–2 frases:
-
+Testabilidade. No código original, é impossível testar as regras de negócio de forma automatizada sem que o código trave esperando uma digitação do usuário (input). Ao separar as responsabilidades, podemos testar a lógica de cálculo de planos e check-ins isoladamente de forma rápida e automática.
 > ...
