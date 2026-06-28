@@ -10,32 +10,36 @@ roteiro da aula. Substitua os `...` pelas suas respostas e **não apague** as ce
 
 ```mermaid
 classDiagram
-    %% ===== EXEMPLO JÁ RESOLVIDO — imite este padrão nas classes de baixo =====
-    class Aluno {
-        -id: int
-        -nome: str
-        -plano: str
-        -checkins: int
-    }
-
-    %% ===== AGORA VOCÊ: troque os ... pelos atributos/métodos de cada classe =====
-    %% (use - para privado e + para público, como no exemplo do Aluno)
-    class AlunoRepo {
-        ...
-    }
-
-    class Notificador {
-        +enviar(destinatario, mensagem)
-    }
-
-    class AcademiaService {
-        ...
-    }
-
-    %% Ligações (quem usa quem). As 3 já estão prontas — não precisa mexer.
-    AcademiaService ..> Aluno : cria
-    AcademiaService ..> AlunoRepo : usa
-    AcademiaService ..> Notificador : usa
+%% ===== EXEMPLO JÁ RESOLVIDO — imite este padrão nas classes de baixo =====
+class Aluno {
+-id: int
+-nome: str
+-plano: str
+-checkins: int
+}
+%% ===== AGORA VOCÊ: troque os ... pelos atributos/métodos de cada classe =====
+%% (use - para privado e + para público, como no exemplo do Aluno)
+class AlunoRepo {
+-alunos: list
++salvar(aluno: Aluno)
++buscar_por_id(id: int) Aluno
++buscar_por_nome(nome: str) Aluno
++listar() list
++proximo_id() int
+}
+class Notificador {
++enviar(destinatario, mensagem)
+}
+class AcademiaService {
+-repo: AlunoRepo
+-notificador: Notificador
++matricular(nome: str, plano: str) Aluno
++fazer_checkin(aluno_id: int)
+}
+%% Ligações (quem usa quem). As 3 já estão prontas — não precisa mexer.
+AcademiaService ..> Aluno : cria
+AcademiaService ..> AlunoRepo : usa
+AcademiaService ..> Notificador : usa
 ```
 
 **Dicas do que cada classe guarda/faz** (decida os detalhes você):
