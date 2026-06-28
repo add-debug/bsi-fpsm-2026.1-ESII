@@ -1,5 +1,5 @@
 # Ponto de entrada (composition root): cria e conecta as camadas. (PRONTO)
-from apresentacao.cli import menu
+rom apresentacao.cli import menu
 from repositorio.pedido_repo import PedidoRepo
 from servico.pedido_service import PedidoService
 
