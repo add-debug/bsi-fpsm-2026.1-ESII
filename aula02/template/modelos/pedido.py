@@ -16,4 +16,3 @@ class Pedido:
 
     def total(self) -> float:
         return sum(item.subtotal() for item in self.itens)
-        ...
