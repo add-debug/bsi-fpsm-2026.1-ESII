@@ -9,4 +9,3 @@ class Item:
 
     def subtotal(self) -> float:
         return self.preco * self.qtd
-        ...
