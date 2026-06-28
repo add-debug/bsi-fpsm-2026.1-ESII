@@ -9,15 +9,16 @@ from notificador import Notificador
 
 class Academia:
     def __init__(self):
-        self.alunos = []
+        self.alunos = []        # cada aluno é um dicionário solto
         self.proximo_id = 1
-        self.notificador = Notificador()   # <- o componente de aviso, pronto para usar
 
     def matricular(self):
+        # (2) TELA: lê os dados digitados
         nome = input("Nome do aluno: ")
         print("Planos: 1-Mensal  2-Trimestral  3-Anual")
         plano = input("Plano: ")
 
+        # (1) REGRA DE NEGÓCIO: o valor da mensalidade depende do tipo de plano
         if plano == "1":
             valor = 100.0
         elif plano == "2":
@@ -32,14 +33,16 @@ class Academia:
         self.alunos.append(aluno)
         self.proximo_id += 1
 
-        # TODO: troque o aviso de boas-vindas por uma chamada ao notificador.
-        #   self.notificador.enviar( <para quem>, <a MESMA mensagem de boas-vindas da v1.0> )
-        ...
+        # (3) NOTIFICAÇÃO: envia o aviso de boas-vindas
+        print(f"[WhatsApp para {nome}] Bem-vindo(a) à FitPará! Mensalidade: R${valor:.2f}.")
 
-        print(f"Aluno {aluno['id']} matriculado.")   # TELA: este fica
+        # (2) TELA: confirma na tela
+        print(f"Aluno {aluno['id']} matriculado.")
 
     def check_in(self):
+        # (2) TELA
         nome = input("Nome do aluno: ")
+        # (1) REGRA: encontra o aluno e conta o check-in
         aluno = None
         for a in self.alunos:
             if a["nome"] == nome:
@@ -49,14 +52,13 @@ class Academia:
             print("Aluno não encontrado.")
             return
         aluno["checkins"] += 1
-
-        # TODO: troque o aviso de confirmação por uma chamada ao notificador.
-        #   self.notificador.enviar( <para quem>, <a MESMA mensagem de check-in da v1.0> )
-        ...
-
-        print(f"Check-in de {nome} registrado. Total: {aluno['checkins']}.")   # TELA: este fica
+        # (3) NOTIFICAÇÃO
+        print(f"[WhatsApp para {nome}] Check-in confirmado! Bom treino.")
+        # (2) TELA
+        print(f"Check-in de {nome} registrado. Total: {aluno['checkins']}.")
 
     def listar(self):
+        # (2) TELA + (1) REGRA recalculada AQUI de novo (duplicada!)
         print("--- Alunos ---")
         for a in self.alunos:
             if a["plano"] == "1":
