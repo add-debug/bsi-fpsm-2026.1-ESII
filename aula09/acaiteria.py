@@ -35,6 +35,9 @@ class Retirada(Entrega):
     def preco(self, distancia_km):
         return 0.0                             # o cliente busca na loja: de graça
 
+class EntregaDrone(Entrega):
+    def preco(self, distancia_km):
+        return 8.0 + 3.0 * distancia_km
 
 # ----------------------------------------------------------------------
 # FACTORY — um lugar só que traduz um nome (texto) na estratégia de entrega
@@ -49,6 +52,7 @@ def criar_entrega(nome):
         "moto": EntregaMoto,
         "bici": EntregaBicicleta,
         "retirada": Retirada,
+        "drone": EntregaDrone,
     }
     if nome not in opcoes:
         raise ValueError(f"forma de entrega desconhecida: {nome!r}")
