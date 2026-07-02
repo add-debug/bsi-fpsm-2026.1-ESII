@@ -1,0 +1,13 @@
+# Configuração das ferramentas de qualidade deste projeto.
+# - ruff: confere o ESTILO do código (linhas muito longas, imports e
+#   variáveis não usados, espaços fora do lugar).
+# - coverage: mede quanto do código os testes exercitam.
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.coverage.run]
+omit = ["test_*.py"]
