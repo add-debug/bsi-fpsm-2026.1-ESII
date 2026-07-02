@@ -19,3 +19,5 @@ def validar(senha):
         if not ok:
             problemas.append(mensagem)
     return problemas
+
+(any(c.islower() for c in senha), "precisa de uma letra minúscula"),
