@@ -1,14 +1,3 @@
-# estacionamento.py — sistema de um estacionamento (Aula 10)
-#
-# Este código FUNCIONA e TEM TESTES (rode: pytest). Mas ele está cheio de
-# "code smells" — sinais de código mal cuidado. O trabalho da aula é
-# RECONHECER esses smells e REFATORAR com segurança (os testes te protegem).
-#
-# Aqui já moram dois padrões da Aula 9: uma Tarifa (Strategy) e avisos quando
-# um carro sai (Observer). O evento dos avisos ainda é um dict "solto".
-
-
-# ---------- Tarifa por tipo de veículo (Strategy) ----------
 class Tarifa:
     def valor(self, horas):
         raise NotImplementedError
@@ -36,7 +25,6 @@ def criar_tarifa(tipo):
     return tabela[tipo]()
 
 
-# ---------- Avisos quando um carro sai (Observer) ----------
 class Observador:
     def atualizar(self, evento):
         raise NotImplementedError
@@ -57,7 +45,11 @@ class Painel(Observador):
         print(f"[PAINEL] vaga liberada (placa {evento['placa']})")
 
 
-# ---------- O sistema ----------
+def _horas_cobradas(hora_entrada, hora_fim):
+    horas = hora_fim - hora_entrada
+    return 1 if horas <= 0 else horas
+
+
 class Estacionamento:
     def __init__(self):
         self.obs = [Cancela(), Caixa(), Painel()]
@@ -69,27 +61,23 @@ class Estacionamento:
         self.n = self.n + 1
 
     def processar_saida(self, placa, hora_saida):
-        t = self.d[placa][0]
-        he = self.d[placa][1]
-        h = hora_saida - he
-        if h <= 0:
-            h = 1
-        x = criar_tarifa(t)
-        v = x.valor(h)
-        evento = {"placa": placa, "tipo": t, "horas": h, "valor": v}
+        tipo = self.d[placa][0]
+        hora_entrada = self.d[placa][1]
+        horas = _horas_cobradas(hora_entrada, hora_saida)
+        tarifa = criar_tarifa(tipo)
+        valor = tarifa.valor(horas)
+        evento = {"placa": placa, "tipo": tipo, "horas": horas, "valor": valor}
         for o in self.obs:
             o.atualizar(evento)
         del self.d[placa]
         self.n = self.n - 1
-        return v
+        return valor
 
     def previa(self, placa, hora_atual):
-        he = self.d[placa][1]
-        h = hora_atual - he
-        if h <= 0:
-            h = 1
-        t = self.d[placa][0]
-        return criar_tarifa(t).valor(h)
+        hora_entrada = self.d[placa][1]
+        horas = _horas_cobradas(hora_entrada, hora_atual)
+        tipo = self.d[placa][0]
+        return criar_tarifa(tipo).valor(horas)
 
 
 if __name__ == "__main__":
